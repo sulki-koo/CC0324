@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,7 +28,7 @@ public class Attachment implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ATTACH_ID", nullable = false)
+	@Column(name="ATTACH_ID")
 	private Long attachId;
 
 	@Column(name="ATTACH_UPLOAD_NAME", columnDefinition = "NVARCHAR2(100)", nullable = false)
@@ -57,5 +59,9 @@ public class Attachment implements Serializable{
 
 	@Column(name="RECIPE_ID", nullable = false)
 	private Long recipeId;
+	
+	@ManyToOne
+	@JoinColumn(name="RECIPE_ID", insertable = false, updatable = false)
+	private Recipe recipe;
 
 }

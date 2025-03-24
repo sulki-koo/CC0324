@@ -27,10 +27,10 @@ public class Member implements Serializable{
 	private static final long serialVersionUID = 958674608281975L;
 
 	@Id
-	@Column(name="MEM_ID", columnDefinition = "VARCHAR2(20)", nullable = false)
+	@Column(name="MEM_ID", columnDefinition = "VARCHAR2(20)")
 	private String memId;
 
-	@Column(name="MEM_PASSWORD",columnDefinition = "VARCHAR2(30)", nullable = false)
+	@Column(name="MEM_PASSWORD",columnDefinition = "VARCHAR2(255)", nullable = false)
 	private String memPassword;
 
 	@Column(name="MEM_NAME", columnDefinition = "NVARCHAR2(50)", nullable = false)
@@ -65,4 +65,27 @@ public class Member implements Serializable{
 	@OneToMany(mappedBy = "member")
 	private List<Recipe> recipeList;
 	
+	@OneToMany(mappedBy = "follower")
+	private List<Follows> followsList;
+	
+	@OneToMany(mappedBy = "following")
+	private List<Follows> followingList;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Likes> likesList;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Review> reviewList;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Message> messageList;
+	
+	@OneToMany(mappedBy = "member")
+	private List<MemberAllergyFood> memberAllergyFoodList;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Inquiry> inquiryList;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Report> reportList;
 }

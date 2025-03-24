@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,7 +28,7 @@ public class Inquiry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="INQUIRY_ID", nullable = false)
+	@Column(name="INQUIRY_ID")
 	private Long inquiryId;
 
 	@Column(name="INQUIRY_TITLE", columnDefinition = "NVARCHAR2(50)", nullable = false)
@@ -61,7 +63,11 @@ public class Inquiry implements Serializable {
 	@Column(name="INQUIRY_BOARD_CODE", nullable = false)
 	private Long inquiryBoardCode;
 
-	@Column(name="MEM_ID", columnDefinition = "NVARCHAR2(20)", nullable = false)
+	@Column(name="MEM_ID", columnDefinition = "VARCHAR2(20)")
 	private String memId;
-
+	
+	@ManyToOne
+	@JoinColumn(name="MEM_ID", insertable = false, updatable = false)
+	private Member member;
+	
 }

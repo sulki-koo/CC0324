@@ -2,12 +2,16 @@ package cookcloud.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,7 +30,7 @@ public class Review implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "REVIEW_ID, nullable = false")
+	@Column(name = "REVIEW_ID")
 	private Long reviewId;
 
 	@Column(name = "REVIEW_CONTENT", columnDefinition = "NVARCHAR2(1000)", nullable = false)
@@ -49,8 +53,22 @@ public class Review implements Serializable {
 
 	@Column(name = "RECIPE_ID", nullable = false)
 	private Long recipeId;
+	
+	@ManyToOne
+	@JoinColumn(name="RECIPE_ID", insertable = false, updatable = false)
+	private Recipe recipe;
 
 	@Column(name = "MEM_ID", columnDefinition = "VARCHAR2(20)", nullable = false)
 	private String memId;
+	
+	@ManyToOne
+	@JoinColumn(name="MEM_ID", insertable = false, updatable = false)
+	private Member member;
 
+	@OneToMany(mappedBy = "review")
+	private List<Report> reportList;
+	
+	@OneToMany(mappedBy = "review")
+	private List<Likes> likestList;
+	
 }

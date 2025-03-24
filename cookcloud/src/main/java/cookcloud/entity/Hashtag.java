@@ -1,12 +1,14 @@
 package cookcloud.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +25,7 @@ public class Hashtag implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="HASH_ID", nullable = false)
+	@Column(name="HASH_ID")
 	private Long hashId;
 
 	@Column(name="HASH_NAME", columnDefinition = "NVARCHAR2(20)", nullable = false)
@@ -34,5 +36,8 @@ public class Hashtag implements Serializable {
 
 	@Column(name="HASH_USAGE_COUNT", nullable = false)
 	private Long hashUsageCount;
+	
+	@OneToMany(mappedBy = "hashtag")
+	private List<RecipeTag> recipeTagList;
 
 }

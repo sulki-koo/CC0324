@@ -23,7 +23,7 @@ public class Allergy implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ALLERGY_ID", nullable = false)
+	@Column(name = "ALLERGY_ID")
 	private Long allergyId;
 
 	@Column(name = "ALLERGY_NAME",  columnDefinition = "NVARCHAR2(20)", nullable = false)

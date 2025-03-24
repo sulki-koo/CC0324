@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,7 +28,7 @@ public class Report implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="REPORT_ID", nullable = false)
+	@Column(name="REPORT_ID")
 	private Long reportId;
 
 	@Column(name="REPORT_REASON", columnDefinition = "NVARCHAR2(500)", nullable = false)
@@ -51,11 +53,23 @@ public class Report implements Serializable {
 
 	@Column(name="RECIPE_ID")
 	private Long recipeId;
+	
+	@ManyToOne
+	@JoinColumn(name="RECIPE_ID", insertable = false, updatable = false)
+	private Recipe recipe;
 
 	@Column(name="REVIEW_ID")
 	private Long reviewId;
+	
+	@ManyToOne
+	@JoinColumn(name="REVIEW_ID", insertable = false, updatable = false)
+	private Review review;
 
 	@Column(name="MEM_ID", columnDefinition = "VARCHAR2(20)")
 	private String memId;
+	
+	@ManyToOne
+	@JoinColumn(name="MEM_ID", insertable = false, updatable = false)
+	private Member member;
 
 }

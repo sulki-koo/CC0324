@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface MessageService {
+import cookcloud.service.MessageService;
+
+public class MessageService {
 
 }

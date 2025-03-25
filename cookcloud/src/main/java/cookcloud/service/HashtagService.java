@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface HashtagService {
+import cookcloud.service.HashtagService;
+
+public class HashtagService {
 
 }

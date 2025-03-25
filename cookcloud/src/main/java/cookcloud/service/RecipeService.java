@@ -1,13 +1,39 @@
 package cookcloud.service;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cookcloud.entity.Member;
 import cookcloud.entity.Recipe;
+import cookcloud.repository.MemberRepository;
+import cookcloud.repository.RecipeRepository;
+import cookcloud.service.RecipeService;
 
-public interface RecipeService {
-	
-	public abstract List<Recipe> getMemberRecipes(String memNickname); // 사용자 닉네임 클릭시 레시피 필터링
-	
-	
+@Service
+public class RecipeService {
 
-	
+	@Autowired
+	private RecipeRepository recipeRepository;
+
+	@Autowired
+	private MemberRepository memberRepository;
+
+	public List<Recipe> getMemberRecipes(String memNickname) {
+		try {
+			Member member = memberRepository.findAll().stream()
+					.filter(m -> m.getMemNickname().equals(memNickname)).findFirst()
+					.orElseThrow(() -> new IllegalAccessException("닉네임 " + memNickname + " 확인불가"));
+
+			 return recipeRepository.findAll().stream()
+		                .filter(recipe -> recipe.getMember().getMemId().equals(member.getMemId()))  // id 비교
+		                .collect(Collectors.toList());
+		} catch (IllegalAccessException iae) {
+			iae.printStackTrace();
+		}
+		return null;
+	}
+
 }

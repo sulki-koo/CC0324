@@ -11,6 +11,5 @@ import cookcloud.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, String>{
 
 	Optional<Member> findByMemNickname(String memNickname);
-	Optional<Member> findByMemId(String memId);
 	
 }

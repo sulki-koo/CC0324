@@ -2,10 +2,21 @@ package cookcloud.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import cookcloud.entity.Allergy;
+import cookcloud.repository.AllergyRepository;
+import cookcloud.service.AllergyService;
 
-public interface AllergyService {
+@Service
+public class AllergyService {
 
-	public abstract List<Allergy> getAllAllergies();
+	@Autowired
+	private AllergyRepository allergyRepository;
+	
+	public List<Allergy> getAllAllergies(){
+		return allergyRepository.findAll();
+	}
 	
 }

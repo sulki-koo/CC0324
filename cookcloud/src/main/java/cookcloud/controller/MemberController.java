@@ -1,19 +1,20 @@
 package cookcloud.controller;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import cookcloud.entity.Member;
 import cookcloud.entity.MemberAllergyFood;
 import cookcloud.service.AllergyService;
 import cookcloud.service.MemberAllergyFoodService;
 import cookcloud.service.MemberService;
+import jakarta.validation.Valid;
 
 @Controller
 public class MemberController {
@@ -30,31 +31,26 @@ public class MemberController {
     // 회원가입 페이지
     @GetMapping("/signup")
     public String showSignupPage(Model model) {
+    	
     	model.addAttribute("allergyList", allergyService.getAllAllergies());
+    	model.addAttribute("member", new Member());
         return "signup";  // signup.html 페이지 반환
     }
 
     // 회원가입 처리
     @PostMapping("/signup")
-    public String registerMember(@RequestParam String memId, 
-                                 @RequestParam String memPassword,
-                                 @RequestParam String memName,
-                                 @RequestParam String memNickname,
-                                 @RequestParam String memEmail,
-                                 @RequestParam String memPhone,
-                                 @RequestParam List<Long> selectedAllergies,
-                                 Model model) {
+    public String registerMember(@ModelAttribute @Valid Member member, Model model) {
         try {
-            memberService.registerMember(memId, memPassword, memName, memNickname, memEmail, memPhone);
+            memberService.registerMember(member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(), member.getMemPhone());
             // 알러지 정보 저장
-            if (selectedAllergies != null && !selectedAllergies.isEmpty()) {
-                for (Long allergyId : selectedAllergies) {
-                    MemberAllergyFood memberAllergyFood = new MemberAllergyFood();
-                    memberAllergyFood.setMemId(memId);
-                    memberAllergyFood.setAllergyId(allergyId);
-                    memberAllergyFood.setMemAllergyInsertAt(LocalDateTime.now());
-                    memberAllergyFood.setMemAllergyIsDeleted("N");  // 초기값 설정
-                    memberAllergyFoodService.insertMemAllergyFood(memberAllergyFood);
+            if (member.getMemberAllergyFoodList() != null && !member.getMemberAllergyFoodList().isEmpty()) {
+                for (MemberAllergyFood allergyFood : member.getMemberAllergyFoodList()) {
+                    MemberAllergyFood newMemberAllergyFood = new MemberAllergyFood();
+                    newMemberAllergyFood.setMemId(member.getMemId());
+                    newMemberAllergyFood.setAllergyId(allergyFood.getAllergyId());
+                    newMemberAllergyFood.setMemAllergyInsertAt(LocalDateTime.now());
+                    newMemberAllergyFood.setMemAllergyIsDeleted("N");  // 초기값 설정
+                    memberAllergyFoodService.insertMemAllergyFood(newMemberAllergyFood);
                 }
             }
             

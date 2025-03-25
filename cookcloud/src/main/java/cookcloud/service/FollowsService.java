@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface FollowsService {
+import cookcloud.service.FollowsService;
+
+public class FollowsService {
 
 }

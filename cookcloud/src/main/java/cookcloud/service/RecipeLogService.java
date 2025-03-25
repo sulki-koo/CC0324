@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface RecipeLogService {
+import cookcloud.service.RecipeLogService;
+
+public class RecipeLogService {
 
 }

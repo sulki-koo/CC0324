@@ -4,15 +4,19 @@
 <head>
 <title>CookCloud MyPage</title>
 <link rel="stylesheet" th:href="@{/css/mypage.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/mypage.js" defer></script>
+<script src="/js/allergy.js" defer></script>
 </head>
 <body>
 	<nav>
-		<a href="/">홈</a> <a href="/mypage">마이페이지</a> <a href="/logout"
-			th:if="${#authorization.expr('isAuthenticated()')}">로그아웃</a> <a
-			href="/login" th:if="${#authorization.expr('!isAuthenticated()')}">로그인</a>
+	    <a href="/">홈</a>
+	    <a href="/mypage">마이페이지</a>
+	    <!-- 인증된 사용자만 로그아웃 링크 표시 -->
+	    <a href="#" id="logoutLink" th:if="${#authorization.expr('isAuthenticated()')}">로그아웃</a>
+	    <!-- 인증되지 않은 사용자만 로그인 링크 표시 -->
+	    <a href="/login" th:if="${#authorization.expr('!isAuthenticated()')}">로그인</a>
 	</nav>
-
 	<!-- 프로필 정보 -->
 	<div class="profile-header">
 		<h2 th:text="${member.memNickname}"></h2>
@@ -142,6 +146,15 @@
 			        <p>이메일: <input type="text" th:value="${member.memEmail}"></p>
 			        <p>전화번호: <input type="text" th:value="${member.memPhone}"></p>
 			        <p>가입 날짜: <span th:text="${#temporals.format(member.memInsertAt, 'yyyy-MM-dd')}">가입 날짜</span></p>
+			        <div class="dropdown">
+						<label for="memAllergyFood">알러지★비선호음식 체크</label>
+			        <div id="selected-allergies" class="selected-allergies"></div>
+				            <div class="dropdown-content">
+			                 <span th:each="allergy : ${allergyList}" class="allergy-item" th:data-id="${allergy.allergyId}">
+			                       <span th:text="${allergy.allergyName}">#알러지 이름</span>
+			                 </span>
+			             </div>            
+			        </div><br><br>
 					<a th:href="@{'/memberUpdate/' + ${member.memId}}">수정</a>
 					<a th:href="@{'/deleteMember/' + ${member.memId}}">회원탈퇴</a>
 				</form>

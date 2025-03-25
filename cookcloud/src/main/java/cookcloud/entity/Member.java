@@ -36,7 +36,7 @@ public class Member implements Serializable{
 	@Column(name="MEM_NAME", columnDefinition = "NVARCHAR2(50)", nullable = false)
 	private String memName;
 
-	@Column(name="MEM_NICKNAME", columnDefinition = "NVARCHAR2(10)", nullable = false)
+	@Column(name="MEM_NICKNAME", unique = true, columnDefinition = "NVARCHAR2(10)", nullable = false)
 	private String memNickname;
 
 	@Column(name="MEM_EMAIL", columnDefinition = "VARCHAR2(50)", nullable = false)

@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface InquiryService {
+import cookcloud.service.InquiryService;
+
+public class InquiryService {
 
 }

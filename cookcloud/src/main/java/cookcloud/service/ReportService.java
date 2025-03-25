@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface ReportService {
+import cookcloud.service.ReportService;
+
+public class ReportService {
 
 }

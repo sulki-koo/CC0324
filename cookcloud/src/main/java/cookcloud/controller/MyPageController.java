@@ -19,7 +19,9 @@ import cookcloud.entity.Message;
 import cookcloud.entity.Recipe;
 import cookcloud.entity.Review;
 import cookcloud.repository.MemberRepository;
-import cookcloud.service.Impl.MyPageService;
+import cookcloud.service.AllergyService;
+import cookcloud.service.MemberService;
+import cookcloud.service.MyPageService;
 
 @Controller
 @RequestMapping("/mypage")
@@ -29,13 +31,15 @@ public class MyPageController {
     private MyPageService myPageService;
     
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberService memberService;
+    
+    @Autowired
+    private AllergyService allergyService;
     
     @GetMapping
     public String viewMyPage(Model model, Principal principal) {
         // 로그인된 사용자(memNickname 기반) 조회
-        Member member = memberRepository.findByMemNickname(principal.getName())
-                .orElseThrow(() -> new RuntimeException("회원 확인 불가"));
+        Member member = memberService.findByMemNickname(principal.getName());
         
         String memId = member.getMemId();
         
@@ -55,6 +59,7 @@ public class MyPageController {
         model.addAttribute("likedRecipes", likedRecipes);
         model.addAttribute("myReviews", myReviews);
         model.addAttribute("messages", messages);
+        model.addAttribute("allergyList", allergyService.getAllAllergies());
         
         return "mypage/main";  // Thymeleaf 템플릿 이름
     }

@@ -1,4 +1,4 @@
-package cookcloud.service.Impl;
+package cookcloud.service;
 
 import java.util.List;
 import java.util.stream.Collectors;

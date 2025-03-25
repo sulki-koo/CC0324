@@ -1,5 +1,7 @@
 package cookcloud.service;
 
-public interface ReviewService {
+import cookcloud.service.ReviewService;
+
+public class ReviewService {
 
 }
